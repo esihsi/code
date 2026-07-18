@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 0.125rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-text font-sans;
+}
+
+/* Custom selections */
+::selection {
+  @apply bg-terracotta text-cream;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-6 py-3 bg-text text-cream transition-colors duration-200;
+}
+
+.btn-primary:hover {
+  @apply bg-terracotta;
+}
+
+.btn-outline {
+  @apply px-6 py-3 border border-text text-text transition-colors duration-200;
+}
+
+.btn-outline:hover {
+  @apply bg-text text-cream;
+}
+
+/* Link underline animation */
+.link-underline {
+  @apply relative pb-1 transition-colors duration-200;
+}
+
+.link-underline::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-terracotta transition-all duration-200;
+}
+
+.link-underline:hover::after {
+  @apply w-full;
+}
+
+/* Image reveal animation */
+.reveal-img {
+  @apply overflow-hidden;
+}
+
+.reveal-img img {
+  @apply transition-transform duration-1000 ease-out hover:scale-105;
+}
+
+/* Overline text */
+.overline {
+  @apply text-xs font-semibold uppercase tracking-wider;
+}
+
+.overline-terracotta {
+  @apply overline text-terracotta;
+}
+
+/* Marquee container */
+.marquee {
+  @apply overflow-hidden bg-text py-6;
+}
+
+.marquee-content {
+  @apply animate-marquee flex gap-8 text-cream whitespace-nowrap italic font-serif;
+}
+
+.marquee-item {
+  @apply text-2xl flex items-center gap-4;
+}
+
+.marquee-dot {
+  @apply w-2 h-2 bg-terracotta rounded-full;
+}
