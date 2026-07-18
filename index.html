@@ -162,11 +162,41 @@
             }
         }
 
-        .hero {
-            min-height: 100vh;
+        .logo-banner {
             padding-top: 5rem;
             padding-left: 1.5rem;
             padding-right: 1.5rem;
+            padding-bottom: 2rem;
+            background: #FAF9F6;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .logo-banner {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        .logo-banner img {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 0.125rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero {
+            min-height: 100vh;
+            padding-top: 2rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            padding-bottom: 5rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -804,6 +834,11 @@
         </nav>
     </header>
 
+    <div class="logo-banner">
+        <img src="https://github.com/esihsi/code/raw/main/image1.jpg" alt="Dan-Moosa Hair Studio Logo - Circular Design">
+        <img src="https://github.com/esihsi/code/raw/main/image2.jpg" alt="Dan-Moosa Hair Studio Logo - Text Design">
+    </div>
+
     <section class="hero">
         <div class="hero-content">
             <div>
@@ -851,7 +886,7 @@
                 <div class="about-text">
                     <p class="overline">Our Story</p>
                     <h2>A unique & <em>tailored</em> experience, for every guest.</h2>
-                    <p>At Dan·Moosa, we believe in personalized service. Whether you're looking for a precision haircut, vibrant color work, or complete bridal styling, our expert team delivers with creativity and care. Using premium products and the latest techniques, we create looks that make you feel confident and beautiful.</p>
+                    <p>At Dan·Moosa, we believe in personalized service. Whether you're looking for a precision haircut, vibrant color work, or complete bridal styling, our expert team delivers [...]
                     <div class="stats">
                         <div class="stat-item">
                             <p>Unisex</p>
@@ -998,18 +1033,14 @@
                             <option value="color">Hair Color</option>
                             <option value="spa">Hair Spa</option>
                             <option value="facial">Facial</option>
+                            <option value="styling">Styling</option>
+                            <option value="bridal">Bridal</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <input type="date" required>
                     </div>
-                    <div class="form-group">
-                        <input type="time" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Additional Notes"></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary form-submit">Confirm Appointment</button>
+                    <button type="submit" class="btn-primary form-submit">Confirm Booking</button>
                 </form>
             </div>
         </div>
@@ -1018,24 +1049,24 @@
     <section id="contact">
         <div class="section-container">
             <p class="overline">Get in Touch</p>
-            <h2>Visit Us</h2>
+            <h2>We'd love to hear from you</h2>
             <div class="contact-content">
                 <div>
                     <div class="contact-info-block">
-                        <p>Address</p>
-                        <p style="color: #1C1B1A;">Krishnarajapuram, Bengaluru, Karnataka 560067, India</p>
-                    </div>
-                    <div class="contact-info-block">
                         <p>Phone</p>
-                        <a href="tel:088844 47703">☎ 088844 47703</a>
+                        <a href="tel:088844 47703">📞 088844 47703</a>
                     </div>
                     <div class="contact-info-block">
-                        <p>Hours</p>
-                        <p style="color: #5C5A56;">Monday – Sunday: 9:00 AM – 9:00 PM<br>Open 7 days a week</p>
+                        <p>Email</p>
+                        <a href="mailto:contact@danmoosa.com">✉ contact@danmoosa.com</a>
+                    </div>
+                    <div class="contact-info-block">
+                        <p>Address</p>
+                        <a href="https://maps.google.com/?q=Krishnarajapuram,+Bengaluru" target="_blank">📍 Krishnarajapuram, Bengaluru, Karnataka 560067</a>
                     </div>
                 </div>
                 <div class="contact-map">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3891.3937098769!2d77.53!3d13.14!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1d0000000001%3A0x0!2sKrishnarajapuram%2C%20Bengaluru%2C%20Karnataka%20560067!5e0!3m2!1sen!2sin!4v1234567890" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.5421384485826!2d77.6244!3d13.0022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae16e0!2d77.6244!3d13.0022!5e0!3m2!1sen!2sin!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
@@ -1044,31 +1075,33 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Dan·Moosa Hair Studio</h3>
-                <p>A luxury unisex salon dedicated to personalized beauty and style.</p>
+                <h3>Dan·Moosa</h3>
+                <p>Premium unisex salon in Bengaluru, delivering luxury hair care and styling services.</p>
             </div>
             <div class="footer-section">
-                <h3>Explore</h3>
-                <a href="#services">Services</a>
+                <h3>Quick Links</h3>
                 <a href="#about">About</a>
-                <a href="#booking">Book Now</a>
+                <a href="#services">Services</a>
+                <a href="#gallery">Gallery</a>
                 <a href="#testimonials">Reviews</a>
+                <a href="#contact">Contact</a>
             </div>
             <div class="footer-section">
-                <h3>Contact</h3>
-                <a href="tel:088844 47703">☎ 088844 47703</a>
-                <p>Krishnarajapuram, Bengaluru, Karnataka 560067</p>
+                <h3>Follow Us</h3>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Dan·Moosa Hair Studio. All rights reserved. | Crafted with care for beauty lovers</p>
+            <p>&copy; 2024 Dan·Moosa Hair Studio. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        function handleBooking(e) {
-            e.preventDefault();
-            alert('Thank you for your booking request! We will confirm your appointment shortly.');
+        function handleBooking(event) {
+            event.preventDefault();
+            alert('Thank you for your booking request! We will contact you shortly.');
         }
     </script>
 </body>
