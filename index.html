@@ -835,8 +835,8 @@
     </header>
 
     <div class="logo-banner">
-        <img src="https://github.com/esihsi/code/raw/main/image1.jpg" alt="Dan-Moosa Hair Studio Logo - Circular Design">
-        <img src="https://github.com/esihsi/code/raw/main/image2.jpg" alt="Dan-Moosa Hair Studio Logo - Text Design">
+        <img src="https://github.com/esihsi/code/raw/main/Logo.png" alt="Dan-Moosa Hair Studio Logo - Circular Design">
+        <img src="https://github.com/esihsi/code/raw/main/Logo%202.png" alt="Dan-Moosa Hair Studio Logo - Text Design">
     </div>
 
     <section class="hero">
@@ -999,46 +999,54 @@
 
     <section id="booking">
         <div class="section-container">
-            <p class="overline">Reserve your Slot</p>
             <div class="booking-content">
                 <div class="booking-info">
-                    <h2>Reserve your <em>chair.</em></h2>
+                    <p class="overline">Book Your Experience</p>
+                    <h2>Schedule Your <em>Appointment</em></h2>
                     <div class="booking-info-block">
                         <p>Hours</p>
-                        <p>9:00 AM – 9:00 PM</p>
-                    </div>
-                    <div class="booking-info-block">
-                        <p>Days</p>
-                        <p>Monday – Sunday (Open all week)</p>
+                        <p>9 AM – 9 PM, Every Day</p>
                     </div>
                     <div class="booking-info-block">
                         <p>Location</p>
                         <p>Krishnarajapuram, Bengaluru, Karnataka 560067</p>
                     </div>
+                    <div class="booking-info-block">
+                        <p>Call</p>
+                        <p>088844 47703</p>
+                    </div>
                 </div>
                 <form class="booking-form" onsubmit="handleBooking(event)">
                     <div class="form-group">
-                        <input type="text" placeholder="Full Name *" required>
+                        <input type="text" placeholder="Full Name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="Phone Number *" required>
+                        <input type="email" placeholder="Email" name="email">
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email Address">
+                        <input type="tel" placeholder="Phone" name="phone" required>
                     </div>
                     <div class="form-group">
-                        <select required>
-                            <option value="">Select Service *</option>
+                        <select name="service" required>
+                            <option value="">Select a Service</option>
                             <option value="haircut">Haircut</option>
                             <option value="color">Hair Color</option>
                             <option value="spa">Hair Spa</option>
-                            <option value="facial">Facial</option>
                             <option value="styling">Styling</option>
+                            <option value="beard">Beard Craft</option>
+                            <option value="keratin">Keratin Treatment</option>
+                            <option value="facial">Facial</option>
                             <option value="bridal">Bridal</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="date" required>
+                        <input type="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="time" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Special requests or notes" name="notes"></textarea>
                     </div>
                     <button type="submit" class="btn-primary form-submit">Confirm Booking</button>
                 </form>
@@ -1048,25 +1056,25 @@
 
     <section id="contact">
         <div class="section-container">
-            <p class="overline">Get in Touch</p>
-            <h2>We'd love to hear from you</h2>
             <div class="contact-content">
                 <div>
-                    <div class="contact-info-block">
-                        <p>Phone</p>
-                        <a href="tel:088844 47703">📞 088844 47703</a>
-                    </div>
-                    <div class="contact-info-block">
-                        <p>Email</p>
-                        <a href="mailto:contact@danmoosa.com">✉ contact@danmoosa.com</a>
-                    </div>
+                    <p class="overline">Get in Touch</p>
+                    <h2>We're Here to <em>Help</em></h2>
                     <div class="contact-info-block">
                         <p>Address</p>
-                        <a href="https://maps.google.com/?q=Krishnarajapuram,+Bengaluru" target="_blank">📍 Krishnarajapuram, Bengaluru, Karnataka 560067</a>
+                        <p>Krishnarajapuram, Bengaluru, Karnataka 560067</p>
+                    </div>
+                    <div class="contact-info-block">
+                        <p>Phone</p>
+                        <a href="tel:088844 47703">☎ 088844 47703</a>
+                    </div>
+                    <div class="contact-info-block">
+                        <p>Hours</p>
+                        <p>9 AM – 9 PM, Daily</p>
                     </div>
                 </div>
                 <div class="contact-map">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.5421384485826!2d77.6244!3d13.0022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae16e0!2d77.6244!3d13.0022!5e0!3m2!1sen!2sin!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8758897584207!2d77.63916!3d13.005476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae16a8f8d8d8d8%3A0x8d8d8d8d8d8d8d8d!2sKrishnarajapuram%2C%20Bengaluru!5e0!3m2!1sen!2sin!4v1234567890" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
@@ -1076,7 +1084,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Dan·Moosa</h3>
-                <p>Premium unisex salon in Bengaluru, delivering luxury hair care and styling services.</p>
+                <p>Premium unisex salon in Bengaluru, delivering personalized beauty experiences.</p>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -1084,24 +1092,25 @@
                 <a href="#services">Services</a>
                 <a href="#gallery">Gallery</a>
                 <a href="#testimonials">Reviews</a>
-                <a href="#contact">Contact</a>
+                <a href="#booking">Book Now</a>
             </div>
             <div class="footer-section">
-                <h3>Follow Us</h3>
-                <a href="#">Instagram</a>
-                <a href="#">Facebook</a>
-                <a href="#">Twitter</a>
+                <h3>Contact</h3>
+                <p>📞 088844 47703</p>
+                <p>📍 Krishnarajapuram, Bengaluru</p>
+                <p>🕒 9 AM – 9 PM Daily</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Dan·Moosa Hair Studio. All rights reserved.</p>
+            <p>&copy; 2026 Dan·Moosa Hair Studio. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         function handleBooking(event) {
             event.preventDefault();
-            alert('Thank you for your booking request! We will contact you shortly.');
+            alert('Thank you for booking! We will confirm your appointment soon.');
+            event.target.reset();
         }
     </script>
 </body>
