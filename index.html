@@ -523,7 +523,7 @@
 
         @media (min-width: 1024px) {
             .gallery-grid {
-                grid-template-columns: repeat(5, 1fr);
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
@@ -533,6 +533,13 @@
             border-radius: 0.125rem;
             overflow: hidden;
             transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .gallery-item:hover {
@@ -971,11 +978,42 @@
             <p class="overline">Visual Journey</p>
             <h2>Gallery</h2>
             <div class="gallery-grid">
-                <div class="gallery-item"></div>
-                <div class="gallery-item"></div>
-                <div class="gallery-item"></div>
-                <div class="gallery-item"></div>
-                <div class="gallery-item"></div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Studio.png" alt="Studio">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Interior.png" alt="Interior">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/HairWash.png" alt="Hair Wash">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Facial.png" alt="Facial">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Reception.png" alt="Reception">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Customer%20Photo%201.png" alt="Customer Photo 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Customer%20Photo%202.png" alt="Customer Photo 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Customer%20Photo%203.png" alt="Customer Photo 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Customer%20Photo%204.png" alt="Customer Photo 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Customer%20Photo%205.png" alt="Customer Photo 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Customer%20Photo%206.png" alt="Customer Photo 6">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/esihsi/code/raw/main/Customer%20Photo%207.png" alt="Customer Photo 7">
+                </div>
             </div>
         </div>
     </section>
