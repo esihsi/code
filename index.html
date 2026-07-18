@@ -262,17 +262,26 @@
 
         .hero-image {
             display: none;
-            aspect-ratio: 4/5;
+            aspect-ratio: 1/1;
             background: #F3EFEA;
-            border-radius: 0.125rem;
+            border-radius: 50%;
             position: relative;
             overflow: hidden;
         }
 
         @media (min-width: 768px) {
             .hero-image {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .floating-card {
@@ -858,10 +867,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <div class="floating-card">
-                    <p>Est. Since Day 1</p>
-                    <p>14+ hours open every day</p>
-                </div>
+                <img src="https://github.com/esihsi/code/raw/main/SignBoard.png" alt="Dan-Moosa Hair Studio Shop Sign">
             </div>
         </div>
     </section>
