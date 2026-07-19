@@ -1520,6 +1520,30 @@
     </footer>
 
     <script>
+        // Backend API base URL — update this if the backend workflow URL changes
+        const API_BASE = (() => {
+            const h = window.location.hostname;
+            if (h === 'localhost' || h === '127.0.0.1') return 'http://localhost:8000';
+            return 'https://2d431f89-bc63-4980-9234-f40f4bf00ab4-00-rjrxebjbb10j.pike.replit.dev:8000';
+        })();
+
+        // Capture page visit (web traffic)
+        (function captureVisit() {
+            const payload = {
+                path: window.location.pathname,
+                referrer: document.referrer,
+                screen_width: window.screen.width,
+                screen_height: window.screen.height,
+                language: navigator.language
+            };
+            fetch(`${API_BASE}/api/visits`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                keepalive: true
+            }).catch(() => {});
+        })();
+
         // Header scroll effect
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {

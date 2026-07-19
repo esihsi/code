@@ -9,6 +9,7 @@ This is a static, single-page website built with plain HTML and CSS. It showcase
 - **Frontend**: `index.html` (root-level static site)
 - **Assets**: salon images (`Studio.png`, `Interior.png`, `HairWash.png`, `Facial.png`, `Reception.png`, `Customer Photo 1-7.png`, `Logo.png`, `Logo 2.png`)
 - **Backend**: `backend/server.py` (FastAPI) and `frontend/` (React/Vite scaffold) exist but are not currently wired into the running site
+- **Traffic capture**: `index.html` sends a small page-view beacon to `POST /api/visits` on the FastAPI backend; data is stored in MongoDB when available, otherwise in `backend/traffic.jsonl` as a fallback. View stats at `/admin/traffic` on the backend.
 
 ## How to Run
 
