@@ -228,6 +228,10 @@
                 <h2 id="visits-today">-</h2>
                 <p>Visits Today</p>
             </div>
+            <div class="card">
+                <h2 id="total-bookings">-</h2>
+                <p>Total Bookings</p>
+            </div>
         </div>
 
         <div class="chart-section">
@@ -241,6 +245,13 @@
             <h3 class="section-title">Recent Visits</h3>
             <div id="recent-visits-container">
                 <div class="empty-state">Loading recent visits...</div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h3 class="section-title">Recent Bookings</h3>
+            <div id="recent-bookings-container">
+                <div class="empty-state">Loading recent bookings...</div>
             </div>
         </div>
 
@@ -366,6 +377,59 @@
             `;
         }
 
+        function renderBookings(bookings) {
+            const container = document.getElementById('recent-bookings-container');
+            document.getElementById('total-bookings').textContent = bookings ? bookings.length : 0;
+
+            if (!bookings || bookings.length === 0) {
+                container.innerHTML = '<div class="empty-state">No bookings recorded yet.</div>';
+                return;
+            }
+
+            const sorted = bookings.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 50);
+            const rows = sorted.map(b => `
+                <tr>
+                    <td>${formatDate(b.created_at)}</td>
+                    <td>${b.name || '-'}</td>
+                    <td>${b.phone || '-'}</td>
+                    <td>${b.service || '-'}</td>
+                    <td>${b.date || '-'} ${b.time || ''}</td>
+                    <td>${b.status || 'pending'}</td>
+                    <td>${truncate(b.notes, 30)}</td>
+                </tr>
+            `).join('');
+
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booked At</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Service</th>
+                            <th>Appointment</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        async function loadBookings() {
+            try {
+                const res = await fetch(`${API_BASE}/api/bookings`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const bookings = await res.json();
+                renderBookings(bookings);
+            } catch (err) {
+                document.getElementById('recent-bookings-container').innerHTML = '<div class="empty-state">Could not load bookings.</div>';
+                document.getElementById('total-bookings').textContent = '-';
+                console.error(err);
+            }
+        }
+
         async function loadStats() {
             try {
                 const res = await fetch(`${API_BASE}/api/visits/stats`);
@@ -388,6 +452,8 @@
 
         loadStats();
         setInterval(loadStats, 30000);
+        loadBookings();
+        setInterval(loadBookings, 30000);
     </script>
 </body>
 </html>
