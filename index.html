@@ -971,6 +971,26 @@
             text-align: center;
         }
 
+        .booking-message {
+            padding: 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            text-align: center;
+            display: none;
+        }
+
+        .booking-message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .booking-message.error {
+            background: #ffebee;
+            color: #c62828;
+            display: block;
+        }
+
         /* Contact */
         #contact {
             background: var(--cream);
@@ -1457,8 +1477,9 @@
                     <div class="form-group">
                         <textarea placeholder="Special requests or notes" id="booking-notes" name="notes"></textarea>
                     </div>
-                    <button type="submit" class="btn-primary form-submit">Confirm Booking</button>
-                    <p class="form-note">You will be redirected to WhatsApp to confirm your appointment.</p>
+                    <button type="submit" class="btn-primary form-submit" id="booking-submit">Confirm Booking</button>
+                    <div id="booking-message" class="booking-message"></div>
+                    <p class="form-note">Your appointment request is saved in our system. We'll call you to confirm.</p>
                 </form>
             </div>
         </div>
@@ -1583,25 +1604,54 @@
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        function handleBooking(event) {
+        async function handleBooking(event) {
             event.preventDefault();
+            const form = event.target;
+            const submitBtn = document.getElementById('booking-submit');
+            const messageEl = document.getElementById('booking-message');
+            const originalText = submitBtn.textContent;
 
-            const name = document.getElementById('booking-name').value;
-            const service = document.getElementById('booking-service').value;
-            const date = document.getElementById('booking-date').value;
-            const time = document.getElementById('booking-time').value;
-            const notes = document.getElementById('booking-notes').value || 'None';
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            data.notes = data.notes || 'None';
 
-            const textMessage = `Hi Dan·Moosa Hair Studio! I would like to book an appointment.%0A%0A` +
-                                `*Name:* ${encodeURIComponent(name)}%0A` +
-                                `*Service:* ${encodeURIComponent(service)}%0A` +
-                                `*Date:* ${encodeURIComponent(date)}%0A` +
-                                `*Time:* ${encodeURIComponent(time)}%0A` +
-                                `*Notes:* ${encodeURIComponent(notes)}`;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+            messageEl.style.display = 'none';
+            messageEl.className = 'booking-message';
 
-            const whatsappUrl = `https://wa.me/917401596542?text=${textMessage}`;
-            window.open(whatsappUrl, '_blank');
-            event.target.reset();
+            try {
+                const response = await fetch(`${API_BASE}/api/bookings`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                    keepalive: true
+                });
+
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+                form.reset();
+                messageEl.textContent = 'Appointment request saved! We will contact you to confirm.';
+                messageEl.className = 'booking-message success';
+            } catch (error) {
+                // Fallback to WhatsApp if the backend fails
+                const textMessage = `Hi Dan·Moosa Hair Studio! I would like to book an appointment.%0A%0A` +
+                    `*Name:* ${encodeURIComponent(data.name)}%0A` +
+                    `*Service:* ${encodeURIComponent(data.service)}%0A` +
+                    `*Date:* ${encodeURIComponent(data.date)}%0A` +
+                    `*Time:* ${encodeURIComponent(data.time)}%0A` +
+                    `*Notes:* ${encodeURIComponent(data.notes)}`;
+
+                const whatsappUrl = `https://wa.me/917401596542?text=${textMessage}`;
+                window.open(whatsappUrl, '_blank');
+
+                messageEl.textContent = 'Could not save online. We opened WhatsApp so you can send your request directly.';
+                messageEl.className = 'booking-message error';
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                messageEl.style.display = 'block';
+            }
         }
     </script>
 </body>

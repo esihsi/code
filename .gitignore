@@ -1,0 +1,11 @@
+# Runtime data
+backend/traffic.jsonl
+backend/*.jsonl
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Replit / local
+.replit.local
