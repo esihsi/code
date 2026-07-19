@@ -1131,10 +1131,32 @@
 
     <script>
         function handleBooking(event) {
-            event.preventDefault();
-            alert('Thank you for booking! We will confirm your appointment soon.');
-            event.target.reset();
-        }
+          event.preventDefault();
+        
+          // Extract values from the form
+          const name = document.getElementById('booking-name').value;
+          const service = document.getElementById('booking-service').value;
+          const date = document.getElementById('booking-date').value;
+          const time = document.getElementById('booking-time').value;
+          const notes = document.getElementById('booking-notes').value || 'None';
+        
+          // Construct a clean, readable text layout
+          const textMessage = `Hi Dan·Moosa Hair Studio! I would like to book an appointment.%0A%0A` +
+                              `*Name:* ${encodeURIComponent(name)}%0A` +
+                              `*Service:* ${encodeURIComponent(service)}%0A` +
+                              `*Date:* ${encodeURIComponent(date)}%0A` +
+                              `*Time:* ${encodeURIComponent(time)}%0A` +
+                              `*Notes:* ${encodeURIComponent(notes)}`;
+        
+          // Salon WhatsApp Link (91 prefix for India)
+          const whatsappUrl = `https://wa.me/918884447703?text=${textMessage}`;
+        
+          // Open WhatsApp in a new tab
+          window.open(whatsappUrl, '_blank');
+        
+          // Clear the form fields
+          event.target.reset();
+}
     </script>
 </body>
 </html>
