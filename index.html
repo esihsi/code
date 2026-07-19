@@ -1041,38 +1041,38 @@
                 </div>
                 <form class="booking-form" onsubmit="handleBooking(event)">
                     <div class="form-group">
-                        <input type="text" placeholder="Full Name" name="name" required>
+                    <input type="text" placeholder="Full Name" id="booking-name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email" name="email">
+                    <input type="email" placeholder="Email" name="email">
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="Phone" name="phone" required>
+                    <input type="tel" placeholder="Phone" name="phone" required>
                     </div>
                     <div class="form-group">
-                        <select name="service" required>
-                            <option value="">Select a Service</option>
-                            <option value="haircut">Haircut</option>
-                            <option value="color">Hair Color</option>
-                            <option value="spa">Hair Spa</option>
-                            <option value="styling">Styling</option>
-                            <option value="beard">Beard Craft</option>
-                            <option value="keratin">Keratin Treatment</option>
-                            <option value="facial">Facial</option>
-                            <option value="bridal">Bridal</option>
-                        </select>
+                    <select name="service" id="booking-service" required>
+                      <option value="">Select a Service</option>
+                      <option value="haircut">Haircut</option>
+                      <option value="color">Hair Color</option>
+                      <option value="spa">Hair Spa</option>
+                      <option value="styling">Styling</option>
+                      <option value="beard">Beard Craft</option>
+                      <option value="keratin">Keratin Treatment</option>
+                      <option value="facial">Facial</option>
+                      <option value="bridal">Bridal</option>
+                    </select>
                     </div>
                     <div class="form-group">
-                        <input type="date" name="date" required>
+                    <input type="date" id="booking-date" name="date" required>
                     </div>
                     <div class="form-group">
-                        <input type="time" name="time" required>
+                    <input type="time" id="booking-time" name="time" required>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Special requests or notes" name="notes"></textarea>
+                    <textarea placeholder="Special requests or notes" id="booking-notes" name="notes"></textarea>
                     </div>
                     <button type="submit" class="btn-primary form-submit">Confirm Booking</button>
-                </form>
+                    </form>
             </div>
         </div>
     </section>
