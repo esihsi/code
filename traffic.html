@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Visualizer | Dan·Moosa Hair Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --cream: #FAF9F6;
+            --surface: #F3EFEA;
+            --terracotta: #9C5B42;
+            --olive: #4A5340;
+            --text: #1C1B1A;
+            --text-soft: #5C5A56;
+            --border: #E5DFD5;
+            --shadow: 0 20px 60px rgba(28, 27, 26, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: 2.25rem;
+        }
+
+        header h1 span {
+            color: var(--terracotta);
+            font-style: italic;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-soft);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+
+        .status-dot.online {
+            background: #4A5340;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.offline {
+            background: #c44;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--terracotta);
+        }
+
+        .card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--terracotta);
+            line-height: 1;
+        }
+
+        .card p {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .chart-section, .table-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--text);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 320px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: var(--surface);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-soft);
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            text-align: center;
+        }
+
+        .error {
+            background: #fff0f0;
+            color: #c44;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .chart-wrapper {
+                height: 240px;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Dan·Moosa <span>Traffic</span></h1>
+                <p style="color: var(--text-soft); font-size: 0.875rem; margin-top: 0.25rem;">Visitor analytics from your website</p>
+            </div>
+            <div class="status">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">Loading...</span>
+            </div>
+        </header>
+
+        <div id="error-message"></div>
+
+        <div class="cards">
+            <div class="card">
+                <h2 id="total-visits">-</h2>
+                <p>Total Visits</p>
+            </div>
+            <div class="card">
+                <h2 id="unique-visitors">-</h2>
+                <p>Unique Visitors</p>
+            </div>
+            <div class="card">
+                <h2 id="visits-today">-</h2>
+                <p>Visits Today</p>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h3 class="section-title">Visits Over Time</h3>
+            <div class="chart-wrapper">
+                <canvas id="visitsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h3 class="section-title">Recent Visits</h3>
+            <div id="recent-visits-container">
+                <div class="empty-state">Loading recent visits...</div>
+            </div>
+        </div>
+
+        <p class="footer-note">
+            Dashboard refreshes every 30 seconds. Backend URL can be changed in the script above.
+        </p>
+    </div>
+
+    <script>
+        // Backend API base URL — update this if your backend moves
+        const API_BASE = 'https://2d431f89-bc63-4980-9234-f40f4bf00ab4-00-rjrxebjbb10j.pike.replit.dev:8000';
+
+        const statusDot = document.getElementById('status-dot');
+        const statusText = document.getElementById('status-text');
+        const errorMessage = document.getElementById('error-message');
+        let chartInstance = null;
+
+        function setStatus(online, text) {
+            statusDot.className = 'status-dot ' + (online ? 'online' : 'offline');
+            statusText.textContent = text;
+        }
+
+        function showError(msg) {
+            errorMessage.innerHTML = `<div class="error">${msg}</div>`;
+            setStatus(false, 'Backend unreachable');
+        }
+
+        function formatDate(isoString) {
+            if (!isoString) return '-';
+            const d = new Date(isoString);
+            return d.toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+        }
+
+        function truncate(str, len) {
+            if (!str) return '-';
+            return str.length > len ? str.slice(0, len) + '...' : str;
+        }
+
+        function aggregateByDate(visits) {
+            const counts = {};
+            visits.forEach(v => {
+                const date = v.timestamp ? v.timestamp.slice(0, 10) : 'Unknown';
+                counts[date] = (counts[date] || 0) + 1;
+            });
+            const sortedDates = Object.keys(counts).sort();
+            return {
+                labels: sortedDates,
+                data: sortedDates.map(d => counts[d])
+            };
+        }
+
+        function renderChart(visits) {
+            const ctx = document.getElementById('visitsChart').getContext('2d');
+            const { labels, data } = aggregateByDate(visits);
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Visits',
+                        data: data,
+                        borderColor: '#9C5B42',
+                        backgroundColor: 'rgba(156, 91, 66, 0.1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#9C5B42',
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderRecentVisits(visits) {
+            const container = document.getElementById('recent-visits-container');
+            if (!visits || visits.length === 0) {
+                container.innerHTML = '<div class="empty-state">No visits recorded yet.</div>';
+                return;
+            }
+
+            const sorted = visits.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 50);
+            const rows = sorted.map(v => `
+                <tr>
+                    <td>${formatDate(v.timestamp)}</td>
+                    <td>${v.path || '/'}</td>
+                    <td>${v.ip || '-'}</td>
+                    <td>${truncate(v.user_agent, 60)}</td>
+                    <td>${truncate(v.referrer, 40)}</td>
+                </tr>
+            `).join('');
+
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Page</th>
+                            <th>IP</th>
+                            <th>User Agent</th>
+                            <th>Referrer</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        async function loadStats() {
+            try {
+                const res = await fetch(`${API_BASE}/api/visits/stats`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+
+                document.getElementById('total-visits').textContent = data.total_visits || 0;
+                document.getElementById('unique-visitors').textContent = data.unique_visitors || 0;
+                document.getElementById('visits-today').textContent = data.visits_today || 0;
+
+                renderChart(data.recent_visits || []);
+                renderRecentVisits(data.recent_visits || []);
+                errorMessage.innerHTML = '';
+                setStatus(true, 'Live · Updated ' + new Date().toLocaleTimeString('en-IN'));
+            } catch (err) {
+                showError(`Could not connect to backend at <code>${API_BASE}</code>. Make sure the backend workflow is running and the URL is correct.`);
+                console.error(err);
+            }
+        }
+
+        loadStats();
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>
