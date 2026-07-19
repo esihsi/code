@@ -167,7 +167,8 @@ async def create_booking(booking: Booking):
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.bookings.insert_one(booking_doc)
-    return booking_doc
+    # Return a JSON-serializable copy (strip the MongoDB ObjectId)
+    return {k: v for k, v in booking_doc.items() if k != "_id"}
 
 @app.get("/api/bookings")
 async def get_bookings():

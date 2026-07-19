@@ -1620,6 +1620,15 @@
             messageEl.style.display = 'none';
             messageEl.className = 'booking-message';
 
+            const textMessage = `Hi Dan·Moosa Hair Studio! I would like to book an appointment.%0A%0A` +
+                `*Name:* ${encodeURIComponent(data.name)}%0A` +
+                `*Service:* ${encodeURIComponent(data.service)}%0A` +
+                `*Date:* ${encodeURIComponent(data.date)}%0A` +
+                `*Time:* ${encodeURIComponent(data.time)}%0A` +
+                `*Notes:* ${encodeURIComponent(data.notes)}`;
+
+            const whatsappUrl = `https://wa.me/917401596542?text=${textMessage}`;
+
             try {
                 const response = await fetch(`${API_BASE}/api/bookings`, {
                     method: 'POST',
@@ -1631,23 +1640,14 @@
                 if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
                 form.reset();
-                messageEl.textContent = 'Appointment request saved! We will contact you to confirm.';
+                messageEl.textContent = 'Appointment request saved! We will contact you to confirm. A WhatsApp message is also being sent.';
                 messageEl.className = 'booking-message success';
             } catch (error) {
-                // Fallback to WhatsApp if the backend fails
-                const textMessage = `Hi Dan·Moosa Hair Studio! I would like to book an appointment.%0A%0A` +
-                    `*Name:* ${encodeURIComponent(data.name)}%0A` +
-                    `*Service:* ${encodeURIComponent(data.service)}%0A` +
-                    `*Date:* ${encodeURIComponent(data.date)}%0A` +
-                    `*Time:* ${encodeURIComponent(data.time)}%0A` +
-                    `*Notes:* ${encodeURIComponent(data.notes)}`;
-
-                const whatsappUrl = `https://wa.me/917401596542?text=${textMessage}`;
-                window.open(whatsappUrl, '_blank');
-
                 messageEl.textContent = 'Could not save online. We opened WhatsApp so you can send your request directly.';
                 messageEl.className = 'booking-message error';
             } finally {
+                // Always send WhatsApp — both when the backend saves successfully and when it fails
+                window.open(whatsappUrl, '_blank');
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
                 messageEl.style.display = 'block';
